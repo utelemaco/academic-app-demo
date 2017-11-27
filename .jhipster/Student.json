@@ -1,6 +1,13 @@
 {
     "fluentMethods": true,
-    "relationships": [],
+    "relationships": [
+     	{
+            "relationshipName": "extraCourse",
+            "otherEntityName": "ExtraCourse",
+            "relationshipType": "one-to-many",
+            "otherEntityField": "name"
+        }
+    ],
     "fields": [
         {
             "fieldName": "name",

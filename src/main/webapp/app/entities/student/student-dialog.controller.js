@@ -5,9 +5,9 @@
         .module('appNameApp')
         .controller('StudentDialogController', StudentDialogController);
 
-    StudentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Student'];
+    StudentDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Student', 'ExtraCourse'];
 
-    function StudentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Student) {
+    function StudentDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Student, ExtraCourse) {
         var vm = this;
 
         vm.student = entity;
@@ -39,6 +39,18 @@
 
         function onSaveError () {
             vm.isSaving = false;
+        }
+        
+        vm.addExtraCourse = function () {
+        	if (angular.isUndefined(vm.student.extraCourses)) {
+        		vm.student.extraCourses = [];
+        	}
+        	
+        	vm.student.extraCourses.push({});
+        }
+        
+        vm.removeExtraCourse = function (index) {
+        	vm.student.extraCourses.splice(index, 1);
         }
 
 

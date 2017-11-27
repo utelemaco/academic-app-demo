@@ -1,18 +1,25 @@
 package com.mycompany.myapp.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * A Student.
  */
 @Entity
 @Table(name = "student")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Student implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -26,6 +33,9 @@ public class Student implements Serializable {
 
     @Column(name = "surname")
     private String surname;
+
+    @OneToMany(mappedBy = "student", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
+    private Set<ExtraCourse> extraCourses = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -59,6 +69,31 @@ public class Student implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public Set<ExtraCourse> getExtraCourses() {
+        return extraCourses;
+    }
+
+    public Student extraCourses(Set<ExtraCourse> ExtraCourses) {
+        this.extraCourses = ExtraCourses;
+        return this;
+    }
+
+    public Student addExtraCourse(ExtraCourse ExtraCourse) {
+        this.extraCourses.add(ExtraCourse);
+        ExtraCourse.setStudent(this);
+        return this;
+    }
+
+    public Student removeExtraCourse(ExtraCourse ExtraCourse) {
+        this.extraCourses.remove(ExtraCourse);
+        ExtraCourse.setStudent(null);
+        return this;
+    }
+
+    public void setExtraCourses(Set<ExtraCourse> ExtraCourses) {
+        this.extraCourses = ExtraCourses;
     }
 
     @Override

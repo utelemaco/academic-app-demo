@@ -16,7 +16,10 @@
                 "title": "Student"
             },
             "name": "Name",
-            "surname": "Surname"
+            "surname": "Surname",
+            "course": "Course",
+            "grade": "Grade",
+            "extracourses": "Extra Courses"
         }
     }
 }

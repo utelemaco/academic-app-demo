@@ -1,19 +1,24 @@
 package com.mycompany.myapp.domain;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * A ExtraCourse.
  */
 @Entity
 @Table(name = "extra_course")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class ExtraCourse implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +34,7 @@ public class ExtraCourse implements Serializable {
     private BigDecimal grade;
 
     @ManyToOne
+    @JsonIgnore
     private Student student;
 
     public Long getId() {

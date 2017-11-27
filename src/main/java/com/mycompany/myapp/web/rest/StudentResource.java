@@ -1,6 +1,7 @@
 package com.mycompany.myapp.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.mycompany.myapp.domain.ExtraCourse;
 import com.mycompany.myapp.domain.Student;
 
 import com.mycompany.myapp.repository.StudentRepository;
@@ -48,11 +49,24 @@ public class StudentResource {
         if (student.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new student cannot already have an ID")).body(null);
         }
+        
+        setInverseAssociations(student);
+        
         Student result = studentRepository.save(student);
         return ResponseEntity.created(new URI("/api/students/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
+	private void setInverseAssociations(Student student) {
+		if (student.getExtraCourses() == null) {
+			return;
+		}
+		
+		for (ExtraCourse extraCourse: student.getExtraCourses()) {
+        	extraCourse.setStudent(student);
+        }
+	}
 
     /**
      * PUT  /students : Updates an existing student.
@@ -70,6 +84,7 @@ public class StudentResource {
         if (student.getId() == null) {
             return createStudent(student);
         }
+        setInverseAssociations(student);
         Student result = studentRepository.save(student);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, student.getId().toString()))
