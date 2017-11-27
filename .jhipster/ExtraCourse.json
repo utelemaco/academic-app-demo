@@ -1,0 +1,26 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "student",
+            "otherEntityName": "student",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "name"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "grade",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "changelogDate": "20171127042637",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "extra_course",
+    "pagination": "no"
+}
